@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="{{ selected_language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ t.title }} - Linguistic analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>{{ t.title }}</h1>
+        <p class="subtitle">{{ t.subtitle }}</p>
+
+        <form method="POST">
+            <div class="language-selector">
+                <label for="language">{{ t.lang_label }}</label>
+                <select name="language" id="language" onchange="this.form.submit()">
+                    <option value="es" {% if selected_language == 'es' %}selected{% endif %}>Español</option>
+                    <option value="en" {% if selected_language == 'en' %}selected{% endif %}>English</option>
+                    <option value="fr" {% if selected_language == 'fr' %}selected{% endif %}>Français</option>
+                    <option value="it" {% if selected_language == 'it' %}selected{% endif %}>Italiano</option>
+                </select>
+            </div>
+
+            <textarea name="text" rows="6" placeholder="{{ t.placeholder }}" autocomplete="off">{{ user_text }}</textarea>
+            
+            <button type="submit">{{ t.analyze_btn }}</button>
+        </form>
+
+        {% if diagnoses %}
+        <div class="results">
+            {% if metrics %}
+            <h2>{{ t.results_title }}</h2>
+            
+            <div class="editorial-metrics">
+                <div class="metric-item">
+                    <span class="metric-label">{{ t.words_card }}</span>
+                    <span class="metric-value">{{ metrics.words }}</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-item">
+                    <span class="metric-label">{{ t.richness_card }}</span>
+                    <span class="metric-value">{{ metrics.richness }}</span>
+                </div>
+                <div class="metric-divider"></div>
+                <div class="metric-item">
+                    <span class="metric-label">{{ t.length_card }}</span>
+                    <span class="metric-value">{{ metrics.length }}</span>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="metricsChart"></canvas>
+            </div>
+
+            {% if frequent_words %}
+            <h2>{{ t.frequent_title }}</h2>
+            <div class="frequent-tags">
+                {% for word, count in frequent_words %}
+                <span class="tag">
+                    <strong>{{ word }}</strong> <span class="badge">({{ count }})</span>
+                </span>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <h2>{{ t.diagnosis_title }}</h2>
+            {% endif %}
+
+            <ul>
+                {% for diag in diagnoses %}
+                <li>{{ diag }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        {% if metrics %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const ctx = document.getElementById('metricsChart').getContext('2d');
+                
+                const numWords = Number("{{ metrics.words }}") || 0;
+                const numRichness = Number("{{ metrics.richness }}") || 0;
+                const numLength = Number("{{ metrics.length }}") || 0;
+
+                const labelWords = "{{ t.words_card }}";
+                const labelRichness = "{{ t.richness_card }}";
+                const labelLength = "{{ t.length_card }}";
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: [labelWords, labelRichness, labelLength],
+                        datasets: [{
+                            label: '{{ t.results_title }}',
+                            data: [numWords, numRichness, numLength],
+                            backgroundColor: [
+                                'rgba(242, 143, 51, 0.6)',
+                                'rgba(143, 123, 134, 0.6)',
+                                'rgba(223, 109, 29, 0.6)'
+                            ],
+                            borderColor: [
+                                'rgba(242, 143, 51, 1)',
+                                'rgba(143, 123, 134, 1)',
+                                'rgba(223, 109, 29, 1)'
+                            ],
+                            borderWidth: 2,
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: 'rgba(239, 214, 131, 0.3)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

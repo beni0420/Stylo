@@ -1,0 +1,340 @@
+/* ==========================================
+   VARIABLES AND COLOR PALETTE
+   ========================================== */
+:root {
+  --color-cream-light: #F0F1CE;
+  --color-yellow: #EFD683;
+  --color-orange: #F28F33;
+  --color-dark-orange: #DF6D1D;
+  --color-mauve: #8F7B86;
+  --color-gray-bg: #D9D4DA;
+  --card-bg: rgba(240, 241, 206, 0.45);
+  --border-color: rgba(239, 214, 131, 0.6);
+  --text-main: #8F7B86;
+}
+
+/* ==========================================
+   GENERAL STRUCTURE AND FLUID CONTAINERS
+   ========================================== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(
+    circle at top right,
+    #F0F1CE,
+    var(--color-gray-bg) 70%
+  );
+  color: var(--text-main);
+  margin: 0;
+  padding: 3rem 1.5rem;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px -5px rgba(143, 123, 134, 0.15);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ==========================================
+   HEADER AND TITLES
+   ========================================== */
+h1 {
+  text-align: center;
+  color: var(--color-dark-orange);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  margin: 0 0 0.25rem 0;
+  word-break: break-word;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--color-mauve);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  margin: 0 0 1rem 0;
+}
+
+/* ==========================================
+   LANGUAGE SELECTOR AND FORM
+   ========================================== */
+.language-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.language-selector label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-mauve);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.language-selector select {
+  background: var(--card-bg);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
+  padding: 0.85rem 1.25rem;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  width: 100%;
+}
+
+.language-selector select:hover {
+  border-color: var(--color-orange);
+  background: rgba(239, 214, 131, 0.4);
+}
+
+.language-selector select:focus {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 15px rgba(242, 143, 51, 0.25);
+}
+
+/* ==========================================
+   TEXTAREA AND BUTTON
+   ========================================== */
+textarea {
+  width: 100%;
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--text-main);
+  font-size: 1.05rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+textarea:focus {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 15px rgba(242, 143, 51, 0.2);
+}
+
+button[type="submit"], button {
+  display: block;
+  width: 100%;
+  background-color: var(--color-orange);
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px -3px rgba(242, 143, 51, 0.4);
+}
+
+button[type="submit"]:hover, button:hover {
+  background-color: var(--color-dark-orange);
+  transform: translateY(-2px);
+}
+
+/* ==========================================
+   RESULTS AND FLUID CARD GRID
+   ========================================== */
+.results {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.results h2 {
+  color: var(--color-dark-orange);
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 10px 25px -5px rgba(143, 123, 134, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-mauve);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.card p {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-dark-orange);
+  margin: 0;
+}
+
+/* ==========================================
+   CHART STYLES
+   ========================================== */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(143, 123, 134, 0.1);
+  margin-top: 0.5rem;
+}
+
+/* ==========================================
+   FREQUENT WORDS STYLES (TAGS)
+   ========================================== */
+.frequent-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--border-color);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  box-shadow: 0 4px 10px -2px rgba(143, 123, 134, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: border-color 0.2s ease;
+}
+
+
+
+.tag strong {
+  color: var(--color-dark-orange);
+}
+
+.badge {
+  background: var(--color-yellow);
+  color: var(--text-main);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+
+/* ==========================================
+   STYLISTIC DIAGNOSIS (LIST)
+   ========================================== */
+ul {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem 1.25rem 2.5rem;
+  list-style-type: disc;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  overflow-wrap: break-word;
+}
+
+ul li {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+/* ==========================================
+   MEDIA QUERIES
+   ========================================== */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem 0.5rem;
+  }
+
+  .container {
+    padding: 1.25rem;
+    border-radius: 16px;
+    gap: 1rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-container {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1rem;
+  }
+  
+  .card p {
+    font-size: 1.75rem;
+  }
+}
